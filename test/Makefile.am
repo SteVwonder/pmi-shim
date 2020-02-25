@@ -1,5 +1,5 @@
 AM_CPPFLAGS = \
-	-I$(top_srcdir)
+	-I$(top_srcdir)/src
 
 bin_PROGRAMS = pmi_test
 pmi_test_LDADD = $(top_builddir)/src/libpmi.la
