@@ -252,7 +252,14 @@ PMIX_EXPORT int PMI_KVS_Get( const char kvsname[], const char key[], char value[
     /* retrieve the data from PMIx - since we don't have a rank,
      * we indicate that by passing the UNDEF value */
     pmix_strncpy(proc.nspace, kvsname, PMIX_MAX_NSLEN);
-    proc.rank = PMIX_RANK_UNDEF;
+    unsigned int scanned_rank = PMIX_RANK_UNDEF;
+    if(sscanf(key, "cmbd.%u.uri", &scanned_rank) > 0) {
+        proc.rank = scanned_rank;
+        //fprintf(stderr, "Using rank %u for get of %s\n", scanned_rank, key);
+    } else {
+        proc.rank = PMIX_RANK_UNDEF;
+        //fprintf(stderr, "Using rank undefined for get of %s\n", key);
+    }
 
     rc = PMIx_Get(&proc, key, NULL, 0, &val);
     if (PMIX_SUCCESS == rc && NULL != val) {
