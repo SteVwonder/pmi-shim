@@ -28,6 +28,7 @@
 #ifdef HAVE_STDLIB_H
 #include <stdlib.h>
 #endif
+#include <stdio.h>
 
 #define ANL_MAPPING "PMI_process_mapping"
 
