@@ -257,7 +257,10 @@ PMIX_EXPORT int PMI_KVS_Get( const char kvsname[], const char key[], char value[
     if(sscanf(key, "cmbd.%u.uri", &scanned_rank) > 0) {
         proc.rank = scanned_rank;
         //fprintf(stderr, "Using rank %u for get of %s\n", scanned_rank, key);
-    } else {
+    } else if (strncmp(key, "flux.instance-level", 21) == 0) {
+        //fprintf(stderr, "Error'ing out for get of %s\n", key);
+        return -1;
+    }  else {
         proc.rank = PMIX_RANK_UNDEF;
         //fprintf(stderr, "Using rank undefined for get of %s\n", key);
     }
